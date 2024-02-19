@@ -1,0 +1,38 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+}
+
+img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+h2 {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+}
+
+h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+p,
+li,
+dt,
+dd,
+label {
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+
+small {
+    font-size: 1.2rem;
+}

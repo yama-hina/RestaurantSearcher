@@ -1,0 +1,215 @@
+$mainColor: rgb(255, 174, 22);
+$subColor: rgb(255, 243, 222);
+
+// タイトル
+h1{
+    font-size: 3.2rem;
+    text-align: center;
+    padding: 5dvh 0 0;
+    margin-bottom: 1em;
+}
+
+// 検索ボックス
+#searchBox{
+    padding: 0 20%;
+    margin-bottom: 2em;
+    // 検索のコンテンツ
+    .searchContent{
+        margin-bottom: 1em;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        // 説明文
+        p{
+            font-weight: bold;
+            margin-bottom: 0.5em;
+        }
+        // セレクトボックス
+        .selectContent{
+            position: relative;
+            flex: 0 1 30%;
+            select{
+                padding: 10px 30px;
+                width: 100%;
+                background-color: $subColor;
+                font-size: 1.8rem;
+                border-radius: 15px;
+                option{
+                    background-color: #fff;
+                }
+            }
+        }
+        // セレクトボックスの三角
+        .selectContent::after {
+            content: "";
+            // 右側に表示する記号をインラインブロックで表示
+            display: inline-block;
+            width: 15px;
+            height: 12px;
+            // ボックスを#000の背景色で塗りつぶし、三角形に変形させる
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            background-color: #000;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    // 検索ボタン
+    #searchButton{
+        display: block;
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        color: #fff;
+        margin: 0 auto;
+        text-align: center;
+        padding: 1.5% 10%;
+        font-size: 1.6rem;
+        letter-spacing: 1em;
+        font-weight: bold;
+        border-radius: 20px;
+        transition: 0.3s;
+        &:hover{
+            background-color: #fff;
+            color: #2b2b2b;
+        }
+    }
+}
+
+
+// ページャ
+#pager{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    // 前へ、次へボタン
+    #prevPage, #nextPage{
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    // 次へ
+    #nextPage{
+    }
+    // 前へ、次へボタンのcssを変更
+    #prevPage.nowPage, #nextPage.nowPage{
+        cursor: auto;
+    }
+    // 数字部
+    #numberList{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 5px;
+        // １つ１つの数字
+        .number{
+            cursor: pointer;
+            background-color: $mainColor;
+            border: 1px solid $mainColor;
+            width: 2em;
+            padding: 5px 0px;
+            text-align: center;
+            color: #fff;
+            transition: 0.3s;
+            &:hover {
+                background-color: #fff;
+                color: #2b2b2b;
+            }
+        }
+        // 今のページの挙動を変える
+        .nowPage {
+            cursor: auto !important;
+            transition: 0;
+            background-color: transparent;
+            color: #000;
+            border: none;
+        
+            &:hover {
+                background-color: transparent;
+                color: #000;
+            }
+        }
+    }
+}
+
+
+// 検索結果の表示部
+#restaurantInfo{
+    padding: 0 5% 30px;
+    // １つ１つのコンテンツ
+    .miniInfo{
+        border: 2px solid $mainColor;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 3%;
+        margin-bottom: 1em;
+        padding-right: 3%;
+        p:first-child{
+            flex: 0 1 15%;
+            aspect-ratio: 1/1;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        div{
+            flex: 0 1 85%;
+            h3{
+                font-weight: bold;
+                margin-bottom: 1em;
+            }
+            h3+p+p{
+                margin-bottom: 1em;
+            }
+            // リンク部分
+            h3+p+p+p{
+                a{
+                    // アンダーラインの設定
+                    border-bottom: 1px black solid;
+                    padding-bottom: 3px;
+                    position: relative;
+                    transition: 0.3s;
+                    font-weight: bold;
+                    &::before, &::after{
+                        content: '';
+                        position: absolute;
+                        background-color: #333;
+                        transition: 0.3s;
+                        right: -3em; // 文字からの距離
+                        height: 1px; // 線の太さ
+                    }
+                    &::before {
+                        top: calc(50% - 4px);
+                        transform: rotate(30deg);
+                        width: 12px;
+                    }
+                    &::after {
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 40px;
+                    }
+                }
+                // 矢印を横に伸ばす
+                a:hover{
+                    border-bottom: 1px $mainColor solid;
+                    color: $mainColor;
+                    &::after, &::before {
+                        right: -5em;
+                        background-color: $mainColor;
+                    }
+                    &::after{
+                        width: 70px;
+                    }
+                }
+            }
+        }
+    }
+}

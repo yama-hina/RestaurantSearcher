@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>レストラン探し</title>
+    <link rel="stylesheet" href="../css/destyle.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+
+<body>
+
+    <h1>レストラン検索アプリ</h1>
+    <div id="searchBox">
+        <div class="searchContent">
+            <p>現在地からの検索したい半径を選択してください</p>
+            <div class="selectContent">
+                <select id="range" required>
+                    <option value="1" selected>300m</option>
+                    <option value="2">500m</option>
+                    <option value="3">1000m</option>
+                    <option value="4">2000m</option>
+                    <option value="5">5000m</option>
+                </select>
+            </div>
+        </div>
+        <button id="searchButton">検索</button>
+    </div>
+
+    <!-- ページャを追加する部分 -->
+    <div id="pager">
+        <p id="prevPage" data-value="">前へ</p>
+        <div id="numberList"></div>
+        <p id="nextPage" data-value="">次へ</p>
+    </div>
+
+
+    <!-- 検索結果の表示部 -->
+    <article id="restaurantInfo">
+        <!-- <h2>お店の一覧</h2> -->
+        <!-- <div class="miniInfo">
+            <p class=""><img src="https://imgfp.hotp.jp/IMGH/30/02/P040163002/P040163002_238.jpg" alt="" srcset=""></p>
+            <div>
+                <h3>焼肉 結局たれ 梅田店関西大阪大阪梅田東通り焼肉・ホルモン韓国料理3001～4000円</h3>
+                <p>大阪府大阪市北区堂山町10-16 1F</p>
+                <p>各梅田駅から徒歩5分！</p>
+                <p><a href="shopDetail.html?id=J001211098">店舗の詳細を見る</a></p>
+            </div>
+        </div> -->
+    </article>
+
+
+
+
+<script src="../js/jquery-3.7.1.min.js"></script>
+<script src="../js/gourmetSearch.js"></script>
+</body>
+</html>
