@@ -56,16 +56,17 @@ body{
     // 店名
     h1{
         font-weight: bold;
-        text-align: center;
-        font-size: 2.0rem;
+        text-align: left;
+        font-size: 2.4rem;
         margin-bottom: 3%;
+        line-height: 1.6;
     }
     // キャッチコピー
     h1+p {
         margin-bottom: 3%;
         // font-weight: bold;
         font-size: 1.8rem;
-        text-align: center;
+        text-align: left;
     }
 
     // メイン情報

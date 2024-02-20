@@ -44,14 +44,15 @@ body {
 
 #restaurantInfo h1 {
   font-weight: bold;
-  text-align: center;
-  font-size: 2rem;
+  text-align: left;
+  font-size: 2.4rem;
   margin-bottom: 3%;
+  line-height: 1.6;
 }
 #restaurantInfo h1 + p {
   margin-bottom: 3%;
   font-size: 1.8rem;
-  text-align: center;
+  text-align: left;
 }
 #restaurantInfo #mainInfo {
   display: flex;
@@ -108,4 +109,4 @@ body {
 #restaurantInfo #subInfo .miniContent p + p {
   grid-column: 2/3;
   grid-row: 1/2;
-}/*# sourceMappingURL=shopDetailMb.css.map */
+}/*# sourceMappingURL=shopDetail.css.map */

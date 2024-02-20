@@ -13,9 +13,6 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 // ページャの1ページの表示件数
 const count = 30;
 
-// 最初だけの処理
-let firstView = true;
-
 
 // 現在地の取得に成功した場合
 function successCallback(position) {
@@ -24,21 +21,9 @@ function successCallback(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    let range, start;
-
-    // もし前のページがあるならそのページを表示する
-    if (document.referrer !== "" && firstView){
-        firstView = false;
-        console.log('nullじゃない');
-        range = window.sessionStorage.getItem(['range']);
-        start = window.sessionStorage.getItem(['nowPage']);
-        // 全session 削除
-        window.sessionStorage.clear();
-        // グルメサーチAPIで検索をする関数を使用
-        gourmetSearch(lat, lng, range, start);
-    }
 
     // 検索ボタンをクリックされたとき
+    let range, start;
     $("#searchButton").click(function (e) {
         // 範囲情報を取得
         range = $("#range").val();
@@ -47,8 +32,8 @@ function successCallback(position) {
 
         // グルメサーチAPIで検索をする関数を使用
         gourmetSearch(lat, lng, range, start);
-    });
 
+    });
 
     // ページャがクリックされたとき
     $(document).on('click', '.number', function () {
@@ -56,17 +41,16 @@ function successCallback(position) {
         if ($(this).hasClass('nowPage')) {
             console.log('nowPage クラスが存在します');
         } else {
+            console.log('nowPage クラスが存在しません');
             // ページのスタート位置を取得
             start = $(this).text();
             // グルメサーチAPIで検索をする関数を使用
             gourmetSearch(lat, lng, range, start);
         }
-        // ページャがおされたら検索の一番上に戻る
         $('html, body').animate({
-            scrollTop: $('#restaurantInfo').offset().top
-        }, 1000); // スクロールのアニメーション時間（ミリ秒）
+            scrollTop: $('#yourTargetElementId').offset().top
+        }, 0); // スクロールのアニメーション時間（ミリ秒）
     });
-
 
     // 前へボタンがクリックされたとき
     $(document).on('click', '#prevPage', function () {
@@ -75,13 +59,8 @@ function successCallback(position) {
         if(start != ""){
             // グルメサーチAPIで検索をする関数を使用
             gourmetSearch(lat, lng, range, start);
-            // ページャがおされたら検索の一番上に戻る
-            $('html, body').animate({
-                scrollTop: $('#restaurantInfo').offset().top
-            }, 1000); // スクロールのアニメーション時間（ミリ秒）
         }
     });
-
 
     // 次へボタンがクリックされたとき
     $(document).on('click', '#nextPage', function () {
@@ -90,10 +69,6 @@ function successCallback(position) {
         if(start != ""){
             // グルメサーチAPIで検索をする関数を使用
             gourmetSearch(lat, lng, range, start);
-            // ページャがおされたら検索の一番上に戻る
-            $('html, body').animate({
-                scrollTop: $('#restaurantInfo').offset().top
-            }, 1000); // スクロールのアニメーション時間（ミリ秒）
         }
     });
 };
@@ -109,19 +84,9 @@ function successCallback(position) {
  */
 function gourmetSearch(lat, lng, range, start) {
     // 今が何ページか
-    const nowPage = start;
+    let nowPage = start;
     // ページのスタート位置を取得
     start = (start - 1) * count + 1;
-
-    // 全session 削除
-    window.sessionStorage.clear();
-    // 情報をセッションに格納
-    window.sessionStorage.setItem(['nowPage'], [nowPage]);
-    window.sessionStorage.setItem(['range'], [range]);
-
-    console.log("今のページは" + nowPage);
-    console.log("半径は" + range);
-
     $.ajax({
         type: "GET",
         url: "../php/gourmetSearch.php",
@@ -135,6 +100,7 @@ function gourmetSearch(lat, lng, range, start) {
         cache: false
     })
     .done(function (data) {
+        console.log("通信成功");
         // 前の検索結果をリセット
         $("#restaurantInfo").empty();
 
@@ -164,83 +130,22 @@ function gourmetSearch(lat, lng, range, start) {
         // 全部で何ページかを取得
         const totalPage = Math.ceil($(data).find('results_available').text() / count);
         // 数字部分を作成
-        if (totalPage <= 10){
-            // 全ページ合わせて10以下ならそのまま表示
-            for (let i = 1; i <= totalPage; i++) {
-                if (i != nowPage){
-                    $("#numberList").append(
-                        "<p class='number'>" + i + "</p>"
-                    );
-                } else {
-                    $("#numberList").append(
-                        "<p class='number nowPage'>" + i + "</p>"
-                    );
-                }
-            }
-        } else {
-            // 10ページを超えるなら分割表示
-            if(1 <= nowPage && nowPage <= 4){
-                // 現在地が4以内なら
-                for (let i = 1; i <= 5; i++) {
-                    if (i != nowPage) {
-                        $("#numberList").append(
-                            "<p class='number'>" + i + "</p>"
-                        );
-                    } else {
-                        $("#numberList").append(
-                            "<p class='number nowPage'>" + i + "</p>"
-                        );
-                    }
-                }
+        for (let i = 1; i <= totalPage; i++) {
+            if (i != nowPage){
                 $("#numberList").append(
-                    "<p class='omit'>・・・</p>"
-                    + "<p class='number'>" + totalPage + "</p>"
+                    "<p class='number'>" + i + "</p>"
                 );
-            } else if ( totalPage-3 <= nowPage && nowPage <= totalPage) {
-                // 現在地が最後の方なら
-                $("#numberList").append(
-                    "<p class='number'>1</p>"
-                    + "<p class='omit'>・・・</p>"
-                );
-                for (let i = (totalPage-4); i <= totalPage; i++) {
-                    if (i != nowPage) {
-                        $("#numberList").append(
-                            "<p class='number'>" + i + "</p>"
-                        );
-                    } else {
-                        $("#numberList").append(
-                            "<p class='number nowPage'>" + i + "</p>"
-                        );
-                    }
-                }
             } else {
                 $("#numberList").append(
-                    "<p class='number'>1</p>"
-                    + "<p class='omit'>・・・</p>"
-                );
-                for (let i = (nowPage - 2); i <= (parseInt(nowPage) + 2); i++) {
-                    if (i != nowPage) {
-                        $("#numberList").append(
-                            "<p class='number'>" + i + "</p>"
-                        );
-                    } else {
-                        $("#numberList").append(
-                            "<p class='number nowPage'>" + i + "</p>"
-                        );
-                    }
-                }
-                $("#numberList").append(
-                    "<p class='omit'>・・・</p>"
-                    + "<p class='number'>" + totalPage + "</p>"
+                    "<p class='number nowPage'>" + i + "</p>"
                 );
             }
-
         }
 
         // 「前へ」と「次へ」ボタンの情報を変更
         if (nowPage == 1){
             $('#prevPage').addClass('nowPage'); // 前へを使えなくする
-            $('#nextPage').data('value', parseInt(nowPage) + 1);
+            $('#nextPage').data('value', nowPage + 1);
             $('#nextPage').removeClass('nowPage');
         } else if (nowPage == totalPage){
             $('#nextPage').addClass('nowPage'); // 次へを使えなくする
@@ -249,7 +154,7 @@ function gourmetSearch(lat, lng, range, start) {
         } else {
             $('#prevPage').removeClass('nowPage');
             $('#nextPage').removeClass('nowPage');
-            $('#nextPage').data('value', parseInt(nowPage) + 1);
+            $('#nextPage').data('value', nowPage + 1);
             $('#prevPage').data('value', nowPage - 1);
         }
 

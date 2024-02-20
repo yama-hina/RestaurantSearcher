@@ -105,6 +105,7 @@ h1{
         display: flex;
         flex-flow: row wrap;
         justify-content: center;
+        align-items: center;
         gap: 5px;
         // １つ１つの数字
         .number{
@@ -140,7 +141,7 @@ h1{
 
 // 検索結果の表示部
 #restaurantInfo{
-    padding: 0 5% 30px;
+    padding: 5% 5% 30px;
     // １つ１つのコンテンツ
     .miniInfo{
         border: 2px solid $mainColor;
