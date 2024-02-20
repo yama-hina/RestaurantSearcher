@@ -1,0 +1,139 @@
+@media screen and (max-width: 428px) {
+
+    $mainColor: rgb(255, 174, 22);
+    $subColor: rgb(255, 243, 222);
+    
+    body{
+        padding: 5dvh 10%;
+    }
+
+    // トップに戻るリンク
+    #top {
+        margin-bottom: 5%;
+        a {
+            padding-bottom: 3px;
+            position: relative;
+            transition: 0s;
+            font-weight: bold;
+            padding-left: 50px; // 左の矢印を入れる部分
+    
+            &::before, &::after {
+                content: '';
+                position: absolute;
+                background-color: #333;
+                transition: 0.3s;
+                left: 0; // 文字からの距離
+                height: 1px; // 線の太さ
+            }
+            // 矢印
+            &::before {
+                top: calc(50% - 4px);
+                transform: rotate(-30deg);
+                width: 12px;
+            }
+            // 矢印の棒
+            &::after {
+                top: 50%;
+                transform: translateY(-50%);
+                width: 40px;
+            }
+        }
+        // 矢印を横に伸ばす
+        a:active {
+            color: $mainColor;
+            &::after, &::before {
+                right: -5em;
+                background-color: $mainColor;
+                left: -30px;
+            }
+            &::after {
+                width: 70px; // 棒を伸ばす
+            }
+        }
+    }
+    
+    
+    // レストラン詳細
+    #restaurantInfo{
+        // 店名
+        h1{
+            font-weight: bold;
+            text-align: left;
+            font-size: 2.4rem;
+            margin-bottom: 3%;
+            line-height: 1.6;
+        }
+        // キャッチコピー
+        h1+p {
+            margin-bottom: 3%;
+            // font-weight: bold;
+            font-size: 1.8rem;
+            text-align: left;
+        }
+    
+        // メイン情報
+        #mainInfo{
+            display: block;
+            flex-flow: row nowrap;
+            align-items: center;
+            gap: 3%;
+            margin-bottom: 25%;
+            p{
+                flex: 0 1 30%;
+                margin-bottom: 2em;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            dl{
+                flex: 0 1 70%;
+                dt{
+                    border-left: 5px $mainColor solid;
+                    padding-left: 0.7em;
+                    margin-bottom: 5px;
+                }
+                dd{
+                    padding-left: calc(0.7em + 5px);
+                    a{
+                        border-bottom: 1px solid #333;
+                        transition: 0s;
+                        &:active{
+                            color: $mainColor;
+                            border-bottom: 1px solid $mainColor;
+                        }
+                    }
+                }
+                // 最後以外の間隔をあける
+                dd:not(:last-child){
+                    margin-bottom: 2%;
+                }
+            }
+        }
+    
+    
+        // その他の情報
+        #subInfo{
+            h2{
+                margin-bottom: 5%;
+            }
+            .miniContent{
+                display: block;
+                grid-template-rows: auto;
+                grid-template-columns: 18% 1fr;
+                border-bottom: 1px #c2c2c2 solid;
+                padding: 0 16px 5px;
+                margin-bottom: 5em;
+                p:first-child{
+                    grid-column: 1/2;
+                    grid-row: 1/2;
+                }
+                p+p{
+                    grid-column: 2/3;
+                    grid-row: 1/2;
+                }
+            }
+        }
+    }
+}

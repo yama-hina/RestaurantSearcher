@@ -164,8 +164,8 @@ function gourmetSearch(lat, lng, range, start) {
         // 全部で何ページかを取得
         const totalPage = Math.ceil($(data).find('results_available').text() / count);
         // 数字部分を作成
-        if (totalPage <= 10){
-            // 全ページ合わせて10以下ならそのまま表示
+        if (totalPage <= 5){
+            // 全ページ合わせて5以下ならそのまま表示
             for (let i = 1; i <= totalPage; i++) {
                 if (i != nowPage){
                     $("#numberList").append(
@@ -178,7 +178,7 @@ function gourmetSearch(lat, lng, range, start) {
                 }
             }
         } else {
-            // 10ページを超えるなら分割表示
+            // 6ページを超えるなら分割表示
             if(1 <= nowPage && nowPage <= 4){
                 // 現在地が4以内なら
                 for (let i = 1; i <= 5; i++) {
@@ -193,14 +193,14 @@ function gourmetSearch(lat, lng, range, start) {
                     }
                 }
                 $("#numberList").append(
-                    "<p class='omit'>・・・</p>"
+                    "<p class='omit'>…</p>"
                     + "<p class='number'>" + totalPage + "</p>"
                 );
             } else if ( totalPage-3 <= nowPage && nowPage <= totalPage) {
                 // 現在地が最後の方なら
                 $("#numberList").append(
                     "<p class='number'>1</p>"
-                    + "<p class='omit'>・・・</p>"
+                    + "<p class='omit'>…</p>"
                 );
                 for (let i = (totalPage-4); i <= totalPage; i++) {
                     if (i != nowPage) {
@@ -216,7 +216,7 @@ function gourmetSearch(lat, lng, range, start) {
             } else {
                 $("#numberList").append(
                     "<p class='number'>1</p>"
-                    + "<p class='omit'>・・・</p>"
+                    + "<p class='omit'>…</p>"
                 );
                 for (let i = (nowPage - 2); i <= (parseInt(nowPage) + 2); i++) {
                     if (i != nowPage) {
@@ -230,7 +230,7 @@ function gourmetSearch(lat, lng, range, start) {
                     }
                 }
                 $("#numberList").append(
-                    "<p class='omit'>・・・</p>"
+                    "<p class='omit'>…</p>"
                     + "<p class='number'>" + totalPage + "</p>"
                 );
             }
